@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.db.grad.javaapi.exception.ResourceNotFoundException;
 import com.db.grad.javaapi.model.Security;
+import com.db.grad.javaapi.model.Trade;
 import com.db.grad.javaapi.repository.SecurityRepository;
 
 
@@ -41,23 +42,35 @@ public class SecurityController {
             .orElseThrow(() -> new ResourceNotFoundException("security not found for this id :: " + id));
         return ResponseEntity.ok().body(security);
     }
+    
+    @GetMapping("/security/{id}/trade")
+    public ResponseEntity < List<Trade> > getAllTradesBySecurityId(@PathVariable(value = "id") Long id)
+    throws ResourceNotFoundException {
+    	Security security = securityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("security not found for this id :: " + id));
+    	List<Trade> trade = security.getTrade();
+        return ResponseEntity.ok().body(trade);
+    }
 
     @PostMapping("/security")
     public Security createDog(@Valid @RequestBody Security security) {
         return securityRepository.saveAndFlush(security);
     }
 
-//    @PutMapping("/dogs/{id}")
-//    public ResponseEntity < Dogs > updateSecurity(@PathVariable(value = "id") Long id,
-//        @Valid @RequestBody Dogs securityDetails) throws ResourceNotFoundException {
-//    	Security getSecurity = securityRepository.findById(id)
-//            .orElseThrow(() -> new ResourceNotFoundException("security not found for this id :: " + id));
-//
-//    	getSecurity.setName(securityDetails.getName());
-//    	getSecurity.setAge(securityDetails.getAge());
-//        final Security updatedSecurity = securityRepository.save(getSecurity);
-//        return ResponseEntity.ok(updatedSecurity);
-//    }
+    @PutMapping("/security/{id}")
+    public ResponseEntity < Security > updateSecurity(@PathVariable(value = "id") Long id,
+        @Valid @RequestBody Security securityDetails) throws ResourceNotFoundException {
+    	Security getSecurity = securityRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("security not found for this id :: " + id));
+
+    	getSecurity.setFacevalue(securityDetails.getFacevalue());
+    	getSecurity.setMaturity_date(securityDetails.getMaturity_date());
+    	getSecurity.setStatus(securityDetails.getStatus());
+    	getSecurity.setCoupon(securityDetails.getCoupon());
+    	getSecurity.setIssuer(securityDetails.getIssuer());
+        final Security updatedSecurity = securityRepository.save(getSecurity);
+        return ResponseEntity.ok(updatedSecurity);
+    }
 
     @DeleteMapping("/security/{id}")
     public Map < String, Boolean > deleteSecurity(@PathVariable(value = "id") Long id)

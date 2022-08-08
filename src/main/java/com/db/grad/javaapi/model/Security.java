@@ -1,36 +1,50 @@
 package com.db.grad.javaapi.model;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "security")
 public class Security {
 
-	@Id 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty("id")
 	private long id;
 	private long ISIN;
 	private long CUSIP;
 	private String issuer;
-	private String maturity_date;
+	private LocalDateTime maturity_date;
 	private int coupon;
 	private String type;
 	private long facevalue;
 	private String status;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "security_id", referencedColumnName = "id")
+	private List<Trade> trade;
+   
 	
 	public Security() {
 		super();
 	}
 	
-	
 
-	public Security(long id, long iSIN, long cUSIP, String issuer, String maturity_date, int coupon, String type,
+	public Security(long iSIN, long cUSIP, String issuer, LocalDateTime maturity_date, int coupon, String type,
 			long facevalue, String status) {
 		super();
-		this.id = id;
 		ISIN = iSIN;
 		CUSIP = cUSIP;
 		this.issuer = issuer;
@@ -41,13 +55,10 @@ public class Security {
 		this.status = status;
 	}
 
-
-
-	@Id
+	@Column(name = "id", nullable = false)
 	public long getId() {
 		return id;
 	}
-
 
 	public void setId(long id) {
 		this.id = id;
@@ -84,12 +95,12 @@ public class Security {
 	}
 
 	@Column(name = "maturity_date", nullable = false)
-	public String getMaturity_date() {
+	public LocalDateTime getMaturity_date() {
 		return maturity_date;
 	}
 
 
-	public void setMaturity_date(String maturity_date) {
+	public void setMaturity_date(LocalDateTime maturity_date) {
 		this.maturity_date = maturity_date;
 	}
 
@@ -128,9 +139,16 @@ public class Security {
 		return status;
 	}
 
-
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public List<Trade> getTrade() {
+		return trade;
+	}
+
+	public void setTrade(List<Trade> trade) {
+		this.trade = trade;
 	}
 		
 

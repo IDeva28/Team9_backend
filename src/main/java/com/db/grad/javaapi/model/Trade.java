@@ -1,51 +1,40 @@
 package com.db.grad.javaapi.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "trade")
 public class Trade {
 
 	@Id
-	private int id;
-	
-	private int book_id;
-	private int counter_party_id;
-	private int security_id;
-	private int quantity;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty("id")
+	private long id;
+//	private long book_id;
+//	private long counter_party_id;
+//	private long security_id;
+	private long quantity;
 	private String status;
-	private int price;
+	private long price;
 	private String buy_sell;
-	private String trade_date;
-	private String settlement_date;
+	private LocalDateTime trade_date;
+	private LocalDateTime settlement_date;
 	
 	public Trade() {
 		super();
 	}
-		
 
-	public Trade(int id, int book_id, int counter_party_id, int security_id, int quantity, String status, int price,
-			String buy_sell, String trade_date, String settlement_date) {
-		super();
-		this.id = id;
-		this.book_id = book_id;
-		this.counter_party_id = counter_party_id;
-		this.security_id = security_id;
-		this.quantity = quantity;
-		this.status = status;
-		this.price = price;
-		this.buy_sell = buy_sell;
-		this.trade_date = trade_date;
-		this.settlement_date = settlement_date;
-	}
-
-
-
-	@Id
-	public int getId() {
+	@Column(name = "id", nullable = false)
+	public long getId() {
 		return id;
 	}
 
@@ -53,39 +42,39 @@ public class Trade {
 		this.id = id;
 	}
 
-	@Column(name = "book_id", nullable = false)
-	public int getBook_id() {
-		return book_id;
-	}
-
-	public void setBook_id(int book_id) {
-		this.book_id = book_id;
-	}
-
-	@Column(name = "counter_party_id", nullable = false)
-	public int getCounter_party_id() {
-		return counter_party_id;
-	}
-
-	public void setCounter_party_id(int counter_party_id) {
-		this.counter_party_id = counter_party_id;
-	}
-
-	@Column(name = "security_id", nullable = false)
-	public int getSecurity_id() {
-		return security_id;
-	}
-
-	public void setSecurity_id(int security_id) {
-		this.security_id = security_id;
-	}
+//	@Column(name = "book_id", nullable = false)
+//	public long getBook_id() {
+//		return book_id;
+//	}
+//
+//	public void setBook_id(int book_id) {
+//		this.book_id = book_id;
+//	}
+//
+//	@Column(name = "counter_party_id", nullable = false)
+//	public long getCounter_party_id() {
+//		return counter_party_id;
+//	}
+//
+//	public void setCounter_party_id(int counter_party_id) {
+//		this.counter_party_id = counter_party_id;
+//	}
+//
+//	@Column(name = "security_id", nullable = false)
+//	public long getSecurity_id() {
+//		return security_id;
+//	}
+//
+//	public void setSecurity_id(int security_id) {
+//		this.security_id = security_id;
+//	}
 
 	@Column(name = "quantity", nullable = false)
-	public int getQuantity() {
+	public long getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(long quantity) {
 		this.quantity = quantity;
 	}
 
@@ -99,11 +88,11 @@ public class Trade {
 	}
 
 	@Column(name = "price", nullable = false)
-	public int getPrice() {
+	public long getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 
@@ -117,20 +106,20 @@ public class Trade {
 	}
 
 	@Column(name = "trade_date", nullable = false)
-	public String getTrade_date() {
+	public LocalDateTime getTrade_date() {
 		return trade_date;
 	}
 
-	public void setTrade_date(String trade_date) {
+	public void setTrade_date(LocalDateTime trade_date) {
 		this.trade_date = trade_date;
 	}
 
 	@Column(name = "settlement_date", nullable = false)
-	public String getSettlement_date() {
+	public LocalDateTime getSettlement_date() {
 		return settlement_date;
 	}
 
-	public void setSettlement_date(String settlement_date) {
+	public void setSettlement_date(LocalDateTime settlement_date) {
 		this.settlement_date = settlement_date;
 	}
 		

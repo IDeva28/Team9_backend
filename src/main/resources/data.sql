@@ -8,7 +8,7 @@ INSERT INTO book (id, book_name) VALUES (11, 'book1');
 INSERT INTO book (id, book_name) VALUES (12, 'book2');
 
 INSERT INTO book_user 
-VALUES (11,1),(12,2);
+VALUES (51,11,1),(52,12,2);
 
 INSERT INTO security (id, ISIN, CUSIP, issuer, maturity_date, coupon, type, 
 facevalue, status)
