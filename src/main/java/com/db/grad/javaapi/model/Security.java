@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -22,15 +23,38 @@ public class Security {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonProperty("id")
+	@Column(name = "id", nullable = false)
 	private long id;
-	private long ISIN;
-	private long CUSIP;
+	
+	@Column(name = "ISIN", nullable = false)
+	private long isin;
+	
+	@Column(name = "CUSIP", nullable = false)
+	private long cuisp;
+	
+	@Column(name = "issuer", nullable = false)
 	private String issuer;
+	
+	@Column(name = "maturity_date", nullable = false)
 	private LocalDateTime maturity_date;
+	
+	@Column(name = "coupon", nullable = false)
 	private int coupon;
+	
+	@Column(name = "type", nullable = false)
 	private String type;
+	
+	@Column(name = "facevalue", nullable = false)
 	private long facevalue;
+	
+	@Column(name = "status", nullable = false)
 	private String status;
+	
+	@Column(name = "action", nullable = false)
+	private boolean action;
+	
+	@Column(name = "issue", nullable = false)
+	private String issue;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "security_id", referencedColumnName = "id")
@@ -41,21 +65,6 @@ public class Security {
 		super();
 	}
 	
-
-	public Security(long iSIN, long cUSIP, String issuer, LocalDateTime maturity_date, int coupon, String type,
-			long facevalue, String status) {
-		super();
-		ISIN = iSIN;
-		CUSIP = cUSIP;
-		this.issuer = issuer;
-		this.maturity_date = maturity_date;
-		this.coupon = coupon;
-		this.type = type;
-		this.facevalue = facevalue;
-		this.status = status;
-	}
-
-	@Column(name = "id", nullable = false)
 	public long getId() {
 		return id;
 	}
@@ -64,27 +73,23 @@ public class Security {
 		this.id = id;
 	}
 
-	@Column(name = "ISIN", nullable = false)
-	public long getISIN() {
-		return ISIN;
+
+	public long getIsin() {
+		return isin;
 	}
 
-
-	public void setISIN(long iSIN) {
-		ISIN = iSIN;
+	public void setIsin(long isin) {
+		this.isin = isin;
 	}
 
-	@Column(name = "CUSIP", nullable = false)
-	public long getCUSIP() {
-		return CUSIP;
+	public long getCuisp() {
+		return cuisp;
 	}
 
-
-	public void setCUSIP(long cUSIP) {
-		CUSIP = cUSIP;
+	public void setCuisp(long cuisp) {
+		this.cuisp = cuisp;
 	}
 
-	@Column(name = "issuer", nullable = false)
 	public String getIssuer() {
 		return issuer;
 	}
@@ -94,7 +99,6 @@ public class Security {
 		this.issuer = issuer;
 	}
 
-	@Column(name = "maturity_date", nullable = false)
 	public LocalDateTime getMaturity_date() {
 		return maturity_date;
 	}
@@ -104,7 +108,7 @@ public class Security {
 		this.maturity_date = maturity_date;
 	}
 
-	@Column(name = "coupon", nullable = false)
+	
 	public int getCoupon() {
 		return coupon;
 	}
@@ -114,7 +118,7 @@ public class Security {
 		this.coupon = coupon;
 	}
 
-	@Column(name = "type", nullable = false)
+	
 	public String getType() {
 		return type;
 	}
@@ -124,7 +128,7 @@ public class Security {
 		this.type = type;
 	}
 
-	@Column(name = "facevalue", nullable = false)
+	
 	public long getFacevalue() {
 		return facevalue;
 	}
@@ -134,7 +138,6 @@ public class Security {
 		this.facevalue = facevalue;
 	}
 
-	@Column(name = "status", nullable = false)
 	public String getStatus() {
 		return status;
 	}
@@ -143,6 +146,26 @@ public class Security {
 		this.status = status;
 	}
 	
+	public boolean isAction() {
+		return action;
+	}
+
+
+	public void setAction(boolean action) {
+		this.action = action;
+	}
+
+	
+	public String getIssue() {
+		return issue;
+	}
+
+
+	public void setIssue(String issue) {
+		this.issue = issue;
+	}
+
+
 	public List<Trade> getTrade() {
 		return trade;
 	}

@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -16,15 +19,9 @@ public class BookUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonProperty("id")
-	private long id;
-//	private long book_id;
-//	private long user_id;
-		
-	public BookUser() {
-		super();
-	}
-	
 	@Column(name = "id", nullable = false)
+	private long id;
+	
 	public long getId() {
 		return id;
 	}
@@ -33,22 +30,31 @@ public class BookUser {
 		this.id = id;
 	}
 	
-//	@Column(name = "book_id", nullable = false)
-//	public long getBook_id() {
-//		return book_id;
-//	}
-//	
-//	public void setBook_id(long book_id) {
-//		this.book_id = book_id;
-//	}
-//	
-//	@Column(name = "user_id", nullable = false)
-//	public long getUser_id() {
-//		return user_id;
-//	}
-//	public void setUser_id(long user_id) {
-//		this.user_id = user_id;
-//	}
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "book_id", nullable = false)
+	private Book book;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private Users users;
 
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
+	
 }

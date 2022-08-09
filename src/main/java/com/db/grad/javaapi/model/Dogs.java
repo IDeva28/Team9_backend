@@ -16,19 +16,12 @@ public class Dogs {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonProperty("id")
 	private long id;
+    
+    @Column(nullable = false)
     private String name;
+
+    @Column( nullable = false)
     private long age;
-
-    public Dogs() {
-
-    }
-
-    public Dogs(long id, String name, long age) {
-    	this.id=id;
-        this.name = name;
-        this.age = age;
-
-    }
 
     public long getId() {
         return id;
@@ -36,8 +29,6 @@ public class Dogs {
     public void setId(long id) {
         this.id = id;
     }
-    
-    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
@@ -45,7 +36,6 @@ public class Dogs {
         this.name = name;
     }
 
-    @Column(name = "age", nullable = false)
     public long getAge() {
         return age;
     }

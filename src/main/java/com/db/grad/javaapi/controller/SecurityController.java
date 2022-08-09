@@ -24,7 +24,7 @@ import com.db.grad.javaapi.repository.SecurityRepository;
 
 
 @RestController
-@RequestMapping("/api/v2")
+@RequestMapping("/api/v1")
 public class SecurityController {
 	
 	@Autowired
@@ -51,7 +51,27 @@ public class SecurityController {
     	List<Trade> trade = security.getTrade();
         return ResponseEntity.ok().body(trade);
     }
-
+    
+    @GetMapping("/security/status/{status}")
+    public List<Security> getSecurityByStatus(@PathVariable(value = "status") String status){
+    	List<Security> security = securityRepository.getAllByStatus(status);
+    	return security;
+    }
+    
+//    @GetMapping("/security/{userId}")
+//    public ResponseEntity < List<Security> > getSecurityByUserId(@PathVariable(value = "userId") Long userId)
+//    throws ResourceNotFoundException {
+//        List<Security> security = securityRepository.getSecurityByUserId(userId);
+//        return ResponseEntity.ok().body(security);
+//    }
+    
+//    @PostMapping("/security/dateRange")
+//    public ResponseEntity < Security > getSecurityByMaturityDateRange(@Valid @RequestBody Map<String, String> inputDate)
+//    throws ResourceNotFoundException {
+//        Security security = (Security) securityRepository.getSecurityByMaturityDate(inputDate.get("From"),inputDate.get("To"));
+//        return ResponseEntity.ok().body(security);
+//    }
+    
     @PostMapping("/security")
     public Security createDog(@Valid @RequestBody Security security) {
         return securityRepository.saveAndFlush(security);
@@ -68,6 +88,7 @@ public class SecurityController {
     	getSecurity.setStatus(securityDetails.getStatus());
     	getSecurity.setCoupon(securityDetails.getCoupon());
     	getSecurity.setIssuer(securityDetails.getIssuer());
+    	
         final Security updatedSecurity = securityRepository.save(getSecurity);
         return ResponseEntity.ok(updatedSecurity);
     }

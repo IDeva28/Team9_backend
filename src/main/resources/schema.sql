@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS dogs CASCADE;
 CREATE TABLE dogs (
-id INT NOT NULL,
-name VARCHAR(250) NOT NULL,
-age INT NOT NULL
+id INT PRIMARY KEY,
+name VARCHAR(250) ,
+age INT 
 );
 
 DROP TABLE IF EXISTS users CASCADE;
@@ -41,7 +41,9 @@ maturity_date DATE,
 coupon INT ,
 type VARCHAR(50),
 facevalue INT,
-status VARCHAR(50)
+status VARCHAR(50),
+action Boolean,
+issue varchar(250)
 );
 
 DROP TABLE IF EXISTS counter_party CASCADE;

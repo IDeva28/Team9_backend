@@ -11,9 +11,9 @@ INSERT INTO book_user
 VALUES (51,11,1),(52,12,2);
 
 INSERT INTO security (id, ISIN, CUSIP, issuer, maturity_date, coupon, type, 
-facevalue, status)
-VALUES (21, 12345, 67890, 'company1', '2023-12-25', 5, 'type1', 100, 'active'),
-(22, 23456, 78901, 'company2', '2022-12-25', 3, 'type2', 1000, 'mature');
+facevalue, status, action, issue)
+VALUES (21, 12345, 67890, 'company1', '2023-12-25', 5, 'type1', 100, 'active', true ,'issue1'),
+(22, 23456, 78901, 'company2', '2022-12-25', 3, 'type2', 1000, 'mature', false, 'issue2');
 
 INSERT INTO counter_party (id, name) 
 VALUES (31, 'counterParty1'), (32, 'counterParty2');
