@@ -44,17 +44,17 @@ public class Trade {
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "book_id", nullable = false)	
+	@JoinColumn(name = "book_id")	
 	private Book book;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "security_id", nullable = false)	
+	@JoinColumn(name = "security_id")	
 	private Security security;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "counter_party_id", nullable = false)	
+	@JoinColumn(name = "counter_party_id")	
 	private CounterParty counterParty;
 	
 	

@@ -1,8 +1,8 @@
 INSERT INTO dogs (id, name, age) VALUES (1, 'Einstein', 3);
 INSERT INTO dogs (id, name, age) VALUES (2, 'Kaya', 5);
 
-INSERT INTO users (id, name, email, role) VALUES (1, 'abc', 'abc@gmail.com', 'role1');
-INSERT INTO users (id, name, email, role) VALUES (2, 'xyz', 'xyz@gmail.com', 'role2');
+INSERT INTO users (id, name, email, role, password) VALUES (1, 'abc', 'abc@gmail.com', 'role1', '1234');
+INSERT INTO users (id, name, email, role, password) VALUES (2, 'xyz', 'xyz@gmail.com', 'role2', '1234');
 
 INSERT INTO book (id, book_name) VALUES (11, 'book1');
 INSERT INTO book (id, book_name) VALUES (12, 'book2');

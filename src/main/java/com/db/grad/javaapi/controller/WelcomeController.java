@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.db.grad.javaapi.model.Users;
 import com.db.grad.javaapi.repository.UsersRepository;
 
 @RestController
@@ -27,8 +28,10 @@ public class WelcomeController {
 	public boolean login(@Valid @RequestBody Map<String, String> credentials) throws Exception {
 
 		try {
-			usersRepository.checkLogin(credentials.get("email"), credentials.get("password"));
+			Users user=usersRepository.checkLogin(credentials.get("email"), credentials.get("password"));
+			if(user!=null)
 			return true;
+			else return false;
 		} catch (Exception e) {
 			return false;
 		}
