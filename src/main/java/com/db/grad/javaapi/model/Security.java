@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Security {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonProperty("id")
 	@Column(name = "id", nullable = false)
 	private long id;
@@ -60,11 +60,7 @@ public class Security {
 	@JoinColumn(name = "security_id", referencedColumnName = "id")
 	private List<Trade> trade;
    
-	
-	public Security() {
-		super();
-	}
-	
+		
 	public long getId() {
 		return id;
 	}
@@ -146,7 +142,7 @@ public class Security {
 		this.status = status;
 	}
 	
-	public boolean isAction() {
+	public boolean getAction() {
 		return action;
 	}
 
@@ -173,6 +169,7 @@ public class Security {
 	public void setTrade(List<Trade> trade) {
 		this.trade = trade;
 	}
+
 		
 
 }

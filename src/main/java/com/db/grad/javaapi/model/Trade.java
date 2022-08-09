@@ -19,27 +19,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Trade {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonProperty("id")
-	@Column(nullable = false)
+	@Column(name = "id", nullable = false)
 	private long id;
 	
-	@Column(nullable = false)
+	@Column(name = "quantity", nullable = false)
 	private long quantity;
-	
-	@Column( nullable = false)
+
+	@Column(name = "status", nullable = false)
 	private String status;
 	
-	@Column(nullable = false)
+	@Column(name = "price", nullable = false)
 	private long price;
 	
-	@Column(nullable = false)
+	@Column(name = "buy_sell", nullable = false)
 	private String buy_sell;
 	
-	@Column( nullable = false)
+	@Column(name = "trade_date", nullable = false)
 	private LocalDateTime trade_date;
 	
-	@Column(nullable = false)
+	@Column(name = "settlement_date", nullable = false)
 	private LocalDateTime settlement_date;
 	
 	@JsonIgnore
@@ -51,6 +51,12 @@ public class Trade {
 	@ManyToOne
 	@JoinColumn(name = "security_id", nullable = false)	
 	private Security security;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "counter_party_id", nullable = false)	
+	private CounterParty counterParty;
+	
 	
 	public long getId() {
 		return id;
@@ -115,7 +121,9 @@ public class Trade {
 	public void setBook(Book book) {
 		this.book = book;
 	}
-
-		
+	
+	public Security getSecurity() {
+		return security;
+	}
 
 }

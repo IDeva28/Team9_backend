@@ -1,5 +1,6 @@
 package com.db.grad.javaapi.controller;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class SecurityController {
     private SecurityRepository securityRepository;    
 
     @GetMapping("/security")
-    public List<Security> getAllDogs() {
+    public List<Security> getAllSecurity() {
         return securityRepository.findAll();
     }
     
@@ -58,26 +59,28 @@ public class SecurityController {
     	return security;
     }
     
-//    @GetMapping("/security/{userId}")
-//    public ResponseEntity < List<Security> > getSecurityByUserId(@PathVariable(value = "userId") Long userId)
-//    throws ResourceNotFoundException {
-//        List<Security> security = securityRepository.getSecurityByUserId(userId);
-//        return ResponseEntity.ok().body(security);
-//    }
+    @GetMapping("/security/user/{userId}")
+    public ResponseEntity < List<Security> > getSecurityByUserId(@PathVariable(value = "userId") Long userId)
+    throws ResourceNotFoundException {
+        List<Security> security = securityRepository.getSecurityByUserId(userId);
+        return ResponseEntity.ok().body(security);
+    }
     
-//    @PostMapping("/security/dateRange")
-//    public ResponseEntity < Security > getSecurityByMaturityDateRange(@Valid @RequestBody Map<String, String> inputDate)
-//    throws ResourceNotFoundException {
-//        Security security = (Security) securityRepository.getSecurityByMaturityDate(inputDate.get("From"),inputDate.get("To"));
-//        return ResponseEntity.ok().body(security);
-//    }
+    @PostMapping("/security/dateRange")
+    public ResponseEntity <List< Security >> getSecurityByMaturityDateRange(@Valid @RequestBody Map<String, Date> inputDate)
+    throws ResourceNotFoundException {
+    	System.out.println(inputDate.get("From"));
+    	
+        List<Security> security = (List<Security>) securityRepository.getSecurityByMaturityDate(inputDate.get("From").toLocalDate(),inputDate.get("To").toLocalDate());
+        return ResponseEntity.ok().body(security);
+    }
     
-    @PostMapping("/security")
-    public Security createDog(@Valid @RequestBody Security security) {
+    @PostMapping("/security/add")
+    public Security createSecurity(@Valid @RequestBody Security security) {
         return securityRepository.saveAndFlush(security);
     }
 
-    @PutMapping("/security/{id}")
+    @PutMapping("/security/update/{id}")
     public ResponseEntity < Security > updateSecurity(@PathVariable(value = "id") Long id,
         @Valid @RequestBody Security securityDetails) throws ResourceNotFoundException {
     	Security getSecurity = securityRepository.findById(id)
@@ -88,12 +91,15 @@ public class SecurityController {
     	getSecurity.setStatus(securityDetails.getStatus());
     	getSecurity.setCoupon(securityDetails.getCoupon());
     	getSecurity.setIssuer(securityDetails.getIssuer());
+    	getSecurity.setAction(securityDetails.getAction());
+    	getSecurity.setIssue(securityDetails.getIssue());
+    	
     	
         final Security updatedSecurity = securityRepository.save(getSecurity);
         return ResponseEntity.ok(updatedSecurity);
     }
 
-    @DeleteMapping("/security/{id}")
+    @DeleteMapping("/security/delete/{id}")
     public Map < String, Boolean > deleteSecurity(@PathVariable(value = "id") Long id)
     throws Exception {
     	Security security = securityRepository.findById(id)
@@ -104,5 +110,4 @@ public class SecurityController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-
 }

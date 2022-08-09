@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.db.grad.javaapi.exception.ResourceNotFoundException;
+import com.db.grad.javaapi.model.Security;
 import com.db.grad.javaapi.model.Trade;
 import com.db.grad.javaapi.repository.TradeRepository;
 
@@ -29,7 +30,7 @@ public class TradeController {
     private TradeRepository tradeRepository;
 
     @GetMapping("/trade")
-    public List < Trade > getAllDogs() {
+    public List < Trade > getAllTrades() {
         return tradeRepository.findAll();
     }
 
@@ -41,12 +42,12 @@ public class TradeController {
         return ResponseEntity.ok().body(trade);
     }
 
-    @PostMapping("/trade")
-    public Trade createDog(@Valid @RequestBody Trade trade) {
+    @PostMapping("/trade/add")
+    public Trade createTrade(@Valid @RequestBody Trade trade) {
         return tradeRepository.saveAndFlush(trade);
     }
 
-    @PutMapping("/trade/{id}")
+    @PutMapping("/trade/update/{id}")
     public ResponseEntity < Trade > updateTrade(@PathVariable(value = "id") Long id,
         @Valid @RequestBody Trade tradeDetails) throws ResourceNotFoundException {
     	Trade getTrade = tradeRepository.findById(id)
@@ -62,7 +63,7 @@ public class TradeController {
         return ResponseEntity.ok(updatedTrade);
     }
 
-    @DeleteMapping("/trade/{id}")
+    @DeleteMapping("/trade/delete/{id}")
     public Map < String, Boolean > deleteTrade(@PathVariable(value = "id") Long id)
     throws Exception {
     	Trade trade = tradeRepository.findById(id)
@@ -72,6 +73,15 @@ public class TradeController {
         Map < String, Boolean > response = new HashMap <>();
         response.put("deleted", Boolean.TRUE);
         return response;
+    }
+    
+    @GetMapping("/trade/{id}/security")
+    public ResponseEntity < Security > getAllSecurityByTradeId(@PathVariable(value = "id") Long id)
+    throws ResourceNotFoundException {
+    	Trade trade = tradeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Trade not found for this id :: " + id));
+    	Security security = trade.getSecurity();
+        return ResponseEntity.ok().body(security);
     }
 
 }
