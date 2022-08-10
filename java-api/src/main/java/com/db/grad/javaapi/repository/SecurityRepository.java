@@ -21,5 +21,8 @@ public interface SecurityRepository extends JpaRepository<Security, Long> {
 			+ "security.type, security.facevalue, security.status, security.action, security.issue FROM Security, "
 			+ "trade, book, book_user, users WHERE Security.id=Trade.security_id AND Trade.Book_Id=Book.id AND Book.id=Book_User.Book_Id AND Book_User.user_id=?1", nativeQuery = true)
 	public List<Security> getSecurityByUserId(Long userId);
+
+	@Query(value = "SELECT * FROM Security WHERE maturity_date < ?1", nativeQuery = true)
+	List<Security> getMaturedSecurity(LocalDate date);
 	
 }

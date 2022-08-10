@@ -1,6 +1,7 @@
 package com.db.grad.javaapi.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +27,7 @@ import com.db.grad.javaapi.repository.SecurityRepository;
 
 
 @RestController
-@RequestMapping("/api/v1")
+@CrossOrigin(origins = "*")
 public class SecurityController {
 	
 	@Autowired
@@ -72,6 +74,16 @@ public class SecurityController {
     	System.out.println(inputDate.get("From"));
     	
         List<Security> security = (List<Security>) securityRepository.getSecurityByMaturityDate(inputDate.get("From").toLocalDate(),inputDate.get("To").toLocalDate());
+        return ResponseEntity.ok().body(security);
+    }
+    
+    @GetMapping("/security/matured")
+    public ResponseEntity <List< Security >> getSecurityByMaturityDateRange()
+    throws ResourceNotFoundException {
+    	 LocalDate date = LocalDate.now();
+    	System.out.println(date);
+    	
+        List<Security> security = (List<Security>) securityRepository.getMaturedSecurity(date);
         return ResponseEntity.ok().body(security);
     }
     
